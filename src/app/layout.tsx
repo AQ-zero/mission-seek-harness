@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 import { AppChrome } from '@/components/app-chrome';
+import { UsagePing } from '@/components/usage-ping'; // [telemetry]
 import { getLang } from '@/lib/i18n/server';
 import { LangProvider } from '@/lib/i18n/client';
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <LangProvider lang={lang}>
+          <UsagePing />
           <AppChrome>{children}</AppChrome>
         </LangProvider>
       </body>

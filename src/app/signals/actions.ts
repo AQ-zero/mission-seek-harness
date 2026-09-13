@@ -1,3 +1,4 @@
+// TARGET: src/app/signals/actions.ts  (REPLACES existing — adds signal_captured event)
 'use server';
 import { getLang } from '@/lib/i18n/server';
 
@@ -5,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { getLLM } from '@/lib/llm';
 import { eulogySystem, signalReflectPrompt, missionSynthesisPrompt } from '@/lib/prompts';
 import { createCaptureItem, updateSignalNote, listSignals, addMissionHypothesisWithEvidence, updateCaptureText, deleteCapture, updateMission, deleteMissionHypothesis } from '@/db/queries';
+import { logEvent } from '@/lib/telemetry'; // [telemetry]
 
 type Kind = 'thought' | 'envy' | 'anger' | 'flow' | 'idea';
 const SIGNAL = new Set(['envy', 'anger', 'flow']);
@@ -14,6 +16,7 @@ export async function captureAction(input: { kind: Kind; text: string }): Promis
     const text = (input.text || '').trim();
     if (!text) return { ok: false, error: getLang() === 'zh' ? '内容不能为空' : 'Content cannot be empty' };
     const id = createCaptureItem({ rawText: text, kind: input.kind });
+    logEvent('signal_captured', { kind: input.kind }); // [telemetry]
     let clue: string | undefined;
     if (SIGNAL.has(input.kind)) {
       try {

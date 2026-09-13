@@ -1,3 +1,4 @@
+// TARGET: src/app/decisions/actions.ts  (REPLACES existing — adds decision_created / decision_resolved events)
 'use server';
 import { getLang } from '@/lib/i18n/server';
 
@@ -14,6 +15,7 @@ import {
   getLifeAim,
   getActiveMission,
 } from '@/db/queries';
+import { logEvent } from '@/lib/telemetry'; // [telemetry]
 
 export type NewDecisionInput = {
   title: string;
@@ -29,6 +31,11 @@ export async function createDecisionAction(input: NewDecisionInput): Promise<{ o
   try {
     if (!input.title || !input.title.trim()) return { ok: false, error: getLang() === 'zh' ? '标题不能为空' : 'Title cannot be empty' };
     createDecision(input);
+    logEvent('decision_created', {
+      confidence: input.confidence ?? 0,
+      hasDate: !!input.predictedByDate,
+      hasPrediction: !!input.predictedOutcome,
+    }); // [telemetry]
     revalidatePath('/decisions');
     revalidatePath('/');
     return { ok: true };
@@ -44,6 +51,7 @@ export async function resolveDecisionAction(
 ): Promise<{ ok: boolean; error?: string }> {
   try {
     resolveDecision(id, actualOutcome, hit);
+    logEvent('decision_resolved', { hit }); // [telemetry]
     revalidatePath('/decisions');
     revalidatePath('/');
     return { ok: true };

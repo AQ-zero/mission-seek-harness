@@ -1,9 +1,11 @@
+// TARGET: src/app/review/actions.ts  (REPLACES existing — adds review_completed event)
 'use server';
 
 import { revalidatePath } from 'next/cache';
 import { getLLM } from '@/lib/llm';
 import { eulogySystem, weeklyChallengePrompt } from '@/lib/prompts';
 import { getWeekSummary, northStarContext, listDueDecisions, listOpenNotDue, getLatestReview, saveWeeklyReview, deleteWeeklyReview } from '@/db/queries';
+import { logEvent } from '@/lib/telemetry'; // [telemetry]
 
 export async function summonWeeklyChallengeAction(): Promise<{ ok: boolean; questions?: string[]; error?: string }> {
   try {
@@ -49,6 +51,7 @@ export async function saveReviewAction(input: {
 }): Promise<{ ok: boolean; error?: string }> {
   try {
     saveWeeklyReview(input);
+    logEvent('review_completed', { realThings: input.realThingsDoneCount, wins: input.wins.length }); // [telemetry]
     revalidatePath('/review');
     revalidatePath('/');
     return { ok: true };

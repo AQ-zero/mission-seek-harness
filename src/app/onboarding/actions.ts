@@ -1,9 +1,11 @@
+// TARGET: src/app/onboarding/actions.ts  (REPLACES existing — adds north_star_set event)
 'use server';
 
 import { revalidatePath } from 'next/cache';
 import { getLLM } from '@/lib/llm';
 import { eulogySystem, eulogyReflectPrompt, eulogyExtractPrompt } from '@/lib/prompts';
 import { saveLifeAim, addMissionHypotheses } from '@/db/queries';
+import { logEvent } from '@/lib/telemetry'; // [telemetry]
 
 export async function reflectOnEulogy(
   text: string,
@@ -52,6 +54,7 @@ export async function saveAim(input: {
   try {
     saveLifeAim({ eulogyText: input.eulogyText, rememberedFor: input.rememberedFor.filter(Boolean) });
     if (input.missions && input.missions.length) addMissionHypotheses(input.missions.filter(Boolean));
+    logEvent('north_star_set', { missions: input.missions.filter(Boolean).length }); // [telemetry]
     revalidatePath('/');
     return { ok: true };
   } catch (e) {
