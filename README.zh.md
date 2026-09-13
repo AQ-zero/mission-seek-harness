@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./site/cover.svg" alt="MissionSeek — 寻见使命，复利一生" width="840">
+<img src="./site/cover.png" alt="MissionSeek — 寻见使命，复利一生" width="840">
 
 ### 寻见使命，复利一生。
 
@@ -29,7 +29,7 @@ MissionSeek 不是又一个待办清单，而是一台**思考仪器**：帮你�
 
 - 🔒 **本地优先、隐私至上。** 全部实践只存在你机器上的一个 SQLite 文件里。无云端、无账号、无遥测。一键导出 JSON——你的数据是可随身携带的仓库。
 - 🔌 **自带模型。** Claude、GPT、DeepSeek、Kimi、GLM，或完全离线的 Ollama。你的 key，本地存储。
-- 🪶 **一间安静的思考室。** "MissionSeek"设计语言——暖象牙底、深松绿点缀、大留白——明暗双主题。
+- 🪶 **一间安静的思考室。** "静室"设计语言——暖象牙底、深松绿点缀、大留白——明暗双主题。
 
 ---
 
@@ -129,6 +129,16 @@ src/app/**           # 页面、Server Actions、API
 electron/            # 桌面外壳（本地运行 Next standalone 服务端）
 site/                # 营销落地页（静态）
 ```
+
+## 🗺️ 现状与路线
+
+MissionSeek **尚早、但已可用**——完整闭环今天就能跑，现在开源，是为了在开放中长大。
+
+- ✅ **已交付**——上面六个机制、本地优先 SQLite 存储、一键 JSON 导出、多模型可插拔、中英双语界面，以及 Windows / macOS / Linux 桌面构建。
+- 🔜 **下一步**——渐进式冷启动、"自我模型"复利可视化、更丰富的校准反馈。
+- 💡 **想法与 bug**——[开一个 issue](https://github.com/AQ-zero/mission-seek-harness/issues) 或发起 [discussion](https://github.com/AQ-zero/mission-seek-harness/discussions)。
+
+如果这个理念打动了你，点个 ⭐ 能帮更多人发现它。
 
 ## 🤝 参与共建
 

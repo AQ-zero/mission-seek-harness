@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="MissionSeek">
-  <rect width="64" height="64" rx="14" fill="#2E5A49"/>
-  <path d="M32 12 L36.1 27.9 L52 32 L36.1 36.1 L32 52 L27.9 36.1 L12 32 L27.9 27.9 Z" fill="#F5F3ED"/>
-  <circle cx="32" cy="32" r="2.6" fill="#C7A86B"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="MissionSeek">
+  <defs>
+    <linearGradient id="star" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#5CA98A"/>
+      <stop offset="0.5" stop-color="#2E5A49"/>
+      <stop offset="1" stop-color="#C9A24B"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#7FC2A6" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#glow)">
+    <path d="M512,67 L553.3,412.2 L702.9,321.1 L611.8,470.7 L957,512 L611.8,553.3 L702.9,702.9 L553.3,611.8 L512,957 L470.7,611.8 L321.1,702.9 L412.2,553.3 L67,512 L412.2,470.7 L321.1,321.1 L470.7,412.2 Z" fill="url(#star)"/>
+  </g>
+
+  <circle cx="512" cy="512" r="30" fill="#1D4433"/>
+  <circle cx="512" cy="512" r="13" fill="#E8C874"/>
 </svg>

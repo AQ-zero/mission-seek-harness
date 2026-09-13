@@ -1,231 +1,235 @@
 <!doctype html>
-<html lang="zh" data-theme="">
+<html lang="en" data-theme="">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MissionSeek —— 寻见使命，复利一生</title>
-<meta name="description" content="MissionSeek——一台帮你把方向想清楚、并用事实验证判断的思考仪器。从讣告倒推北极星，把嫉妒/愤怒/心流变成使命线索，每周把洞察收敛成行动。数据全在本地，自带模型密钥，永不上云。开源（AGPL）。" />
+<title>MissionSeek — Seek your mission. Compound your life.</title>
+<meta name="description" content="MissionSeek is a local-first, open-source system for the judgment and direction that actually shape a life. Reverse-engineer your North Star, turn emotion into mission signals, and compound insight into action — your data stays local." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="alternate icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="MissionSeek — Seek your mission. Compound your life." />
+<meta property="og:description" content="A local-first, open-source system to compound your judgment and direction." />
+<meta property="og:url" content="https://aq-zero.github.io/mission-seek-harness/" />
+<meta property="og:image" content="https://aq-zero.github.io/mission-seek-harness/og-cover.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="MissionSeek — Seek your mission. Compound your life." />
+<meta name="twitter:image" content="https://aq-zero.github.io/mission-seek-harness/og-cover.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" />
 <style>
+/* ---------- DARK is the default ---------- */
 :root{
-  --bg:#F2F0EA; --bg2:#ECEAE2; --card:#FFFFFF;
-  --ink:#1B1A16; --body:#454239; --muted:#7C7869; --faint:#A8A392;
-  --pine:#2E5A49; --pine-d:#274E40; --pine-pale:#F0F5F3; --pine-pale2:#E0EDE8;
-  --line:rgba(40,36,25,.10); --line-2:rgba(40,36,25,.06);
-  --shadow:0 1px 2px rgba(40,36,25,.03),0 22px 48px -24px rgba(40,36,25,.18);
+  --bg:#0B1310; --bg2:#0E1712; --card:#131E18; --card2:#16241D;
+  --ink:#EEF0EA; --body:#B7C0B7; --muted:#8B968C; --faint:#63705F;
+  --pine:#8FC3AC; --pine-d:#A9D2C0; --pine-solid:#2E5A49;
+  --gold:#E8C874; --gold-d:#D9B96A;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.055);
+  --glass:rgba(255,255,255,.03);
+  --shadow:0 2px 4px rgba(0,0,0,.3),0 30px 70px -34px rgba(0,0,0,.75);
   --sans:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
   --serif:'Fraunces',Georgia,'Songti SC',serif;
 }
-[data-theme="dark"]{
-  --bg:#15140F; --bg2:#1B1A16; --card:#1F1D17;
-  --ink:#ECEAE2; --body:#D3CFC3; --muted:#A8A392; --faint:#7C7869;
-  --pine:#84B4A1; --pine-d:#9BC4B6; --pine-pale:rgba(132,180,161,.08); --pine-pale2:rgba(132,180,161,.14);
-  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.06);
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 24px 50px -26px rgba(0,0,0,.6);
+:root[data-theme="light"]{
+  --bg:#F2F0EA; --bg2:#ECEAE2; --card:#FFFFFF; --card2:#FBFAF6;
+  --ink:#1B1A16; --body:#454239; --muted:#7C7869; --faint:#A8A392;
+  --pine:#2E5A49; --pine-d:#274E40; --pine-solid:#2E5A49;
+  --gold:#B08828; --gold-d:#9A7620;
+  --line:rgba(40,36,25,.10); --line-2:rgba(40,36,25,.06);
+  --glass:rgba(40,36,25,.02);
+  --shadow:0 1px 2px rgba(40,36,25,.03),0 22px 48px -24px rgba(40,36,25,.18);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:inherit;text-decoration:none;transition:color .15s ease,opacity .15s ease,background-color .15s ease,border-color .15s ease}
-h1,h2,h3{color:var(--ink);letter-spacing:-.01em;text-wrap:balance;margin:0}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:inherit;text-decoration:none;transition:color .15s ease,opacity .15s ease,border-color .15s ease,background-color .15s ease}
+h1,h2,h3,h4{color:var(--ink);letter-spacing:-.01em;text-wrap:balance;margin:0}
 p{margin:0}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--faint)}
-.pine{color:var(--pine)}
-.tnum{font-family:var(--serif);font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:var(--pine)}
 .serif{font-family:var(--serif)}
-.btn{display:inline-flex;align-items:center;gap:.5em;border-radius:11px;padding:12px 20px;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .15s ease}
-.btn-primary{background:var(--pine);color:#fff}
-[data-theme="dark"] .btn-primary{color:#15140F}
-.btn-primary:hover{background:var(--pine-d)}
-.btn-ghost{border-color:var(--line);color:var(--ink)}
-.btn-ghost:hover{border-color:var(--pine)}
+.btn{display:inline-flex;align-items:center;gap:.5em;border-radius:12px;padding:13px 22px;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .18s ease}
+.btn-primary{background:linear-gradient(180deg,var(--pine-solid),#24493A);color:#fff;box-shadow:0 10px 30px -12px rgba(46,90,73,.7)}
+:root[data-theme="light"] .btn-primary{color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 36px -12px rgba(46,90,73,.8)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:var(--glass)}
+.btn-ghost:hover{border-color:var(--pine);color:var(--pine)}
+
+/* scroll progress */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:120;background:linear-gradient(90deg,var(--pine-solid),var(--pine),var(--gold));box-shadow:0 0 12px rgba(232,200,116,.4)}
+
+/* ambient auras */
+.aura{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;z-index:0}
+.aura.pine{background:radial-gradient(circle at center,rgba(46,90,73,.85),transparent 68%)}
+.aura.gold{background:radial-gradient(circle at center,rgba(201,162,75,.5),transparent 70%)}
+.aura.teal{background:radial-gradient(circle at center,rgba(78,140,116,.6),transparent 70%)}
+:root[data-theme="light"] .aura{opacity:.4}
+@keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(28px,18px)}66%{transform:translate(-18px,10px)}}
 
 /* nav */
-header.nav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-2)}
-.nav-in{display:flex;align-items:center;gap:24px;height:64px}
-.brand{display:flex;align-items:baseline;gap:2px;font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink)}
-.brand .dot{color:var(--pine)}
-.nav-links{display:flex;gap:26px;margin-left:8px}
+header.nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-2)}
+.nav-in{display:flex;align-items:center;gap:22px;height:66px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.brand .mk{width:24px;height:24px;flex:0 0 auto}
+.nav-links{display:flex;gap:26px;margin-left:10px}
 .nav-links a{font-size:14px;color:var(--muted)}
 .nav-links a:hover{color:var(--ink)}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.icon-btn{width:36px;height:36px;display:grid;place-items:center;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.lang button{background:transparent;border:0;color:var(--muted);font-size:12.5px;font-weight:600;padding:7px 11px;cursor:pointer;font-family:var(--sans)}
+.lang button.on{background:var(--pine-solid);color:#fff}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
 .icon-btn:hover{color:var(--ink);border-color:var(--pine)}
-#navToggle{display:none}
 
 /* hero */
-.hero{padding:76px 0 60px}
-.hero-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
-@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:56px}}
-.h-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--pine);background:var(--pine-pale2);border:1px solid var(--pine-pale2);padding:6px 12px;border-radius:999px;font-weight:500}
-h1.head{font-size:clamp(34px,5.4vw,56px);line-height:1.08;font-weight:700;margin-top:22px;letter-spacing:-.02em}
-h1.head .em{font-family:var(--serif);font-weight:500;font-style:italic;color:var(--pine)}
-.sub{margin-top:22px;font-size:17px;line-height:1.75;color:var(--body);max-width:34em}
-.cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
-.cta small{display:block;margin-top:12px;font-size:12.5px;color:var(--faint)}
+.hero{position:relative;padding:96px 0 72px;overflow:hidden}
+.hero .aura.a1{width:620px;height:620px;top:-160px;left:-140px;animation:drift 20s ease-in-out infinite}
+.hero .aura.a2{width:560px;height:560px;top:-40px;right:-160px;animation:drift 26s ease-in-out infinite reverse}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:52px;align-items:center}
+@media(min-width:920px){.hero-grid{grid-template-columns:1.06fr .94fr;gap:60px}}
+.h-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--pine-d);background:var(--glass);border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-weight:500}
+.h-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+h1.head{font-size:clamp(38px,6vw,68px);line-height:1.05;font-weight:700;margin-top:24px;letter-spacing:-.025em}
+h1.head .l1{display:block;color:var(--ink)}
+h1.head .hero-last{display:block;background-image:linear-gradient(100deg,var(--pine-d) 0%,#CFE7DA 30%,var(--gold) 62%,var(--pine-d) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sheen 8s linear infinite}
+@keyframes sheen{0%{background-position:0% 50%}100%{background-position:220% 50%}}
+.sub{margin-top:24px;font-size:17.5px;line-height:1.75;color:var(--body);max-width:34em}
+.cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta small{display:block;width:100%;margin-top:14px;font-size:12.5px;color:var(--faint)}
 
 /* hero mock */
-.mock{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px;position:relative;overflow:hidden}
+.mock{position:relative;background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:24px;overflow:hidden}
+.mock:before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 0%,rgba(143,195,172,.10),transparent 60%);pointer-events:none}
 .mock .bar{display:flex;gap:6px;margin-bottom:18px}
 .mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
 .mock .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--faint)}
-.mock .aim{font-size:19px;font-weight:600;color:var(--ink);line-height:1.4;margin-top:8px}
+.mock .aim{font-size:19px;font-weight:600;color:var(--ink);line-height:1.42;margin-top:8px}
 .mock .aim span{display:block}
 .mock .ns{display:flex;align-items:flex-end;gap:16px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-2)}
-.mock .ns .big{font-family:var(--serif);font-size:64px;line-height:.85;color:var(--ink);font-variant-numeric:tabular-nums}
+.mock .ns .big{font-family:var(--serif);font-size:66px;line-height:.85;color:var(--gold)}
 .mock .ns .cap{font-size:12.5px;color:var(--muted);padding-bottom:6px}
-.mock .row{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13px;color:var(--body)}
+.mock .row{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:13px;color:var(--body)}
 .mock .row .d{width:6px;height:6px;border-radius:50%;background:var(--pine)}
-.mock .chip{margin-top:18px;background:var(--pine-pale);border:1px solid var(--pine-pale2);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--body)}
-.mock .chip b{color:var(--pine)}
+.mock .chip{margin-top:18px;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-size:13px;color:var(--body)}
+.mock .chip b{color:var(--pine-d)}
 
 /* trust bar */
 .trust{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--bg2)}
-.trust-in{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:center;padding:18px 0;font-size:13px;color:var(--muted)}
+.trust-in{display:flex;flex-wrap:wrap;gap:10px 30px;justify-content:center;padding:20px 0;font-size:13px;color:var(--muted)}
 .trust-in b{color:var(--ink);font-weight:600}
 
 /* sections */
-section.blk{padding:84px 0}
-.sec-head{max-width:40em}
-.sec-head h2{font-size:clamp(26px,3.6vw,38px);line-height:1.2;font-weight:700}
+section.blk{padding:92px 0;position:relative;overflow:hidden}
+.sec-head{max-width:42em}
+.sec-head h2{font-size:clamp(27px,3.8vw,40px);line-height:1.18;font-weight:700;margin-top:14px}
 .sec-head p{margin-top:14px;font-size:16.5px;color:var(--muted)}
 
 /* loop */
-.loop{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:40px}
+.loop{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px}
 @media(min-width:760px){.loop{grid-template-columns:repeat(4,1fr)}}
-.loop .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.loop .n{font-family:var(--serif);font-size:15px;color:var(--pine)}
+.loop .step{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:22px;transition:transform .2s ease,border-color .2s ease}
+.loop .step:hover{transform:translateY(-3px);border-color:var(--pine)}
+.loop .n{font-family:var(--serif);font-size:15px;color:var(--gold)}
 .loop .step h3{font-size:16px;margin-top:8px;font-weight:600}
 .loop .step p{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.6}
 
 /* features */
-.feat{display:grid;grid-template-columns:1fr;gap:16px;margin-top:44px}
+.feat{display:grid;grid-template-columns:1fr;gap:16px;margin-top:46px}
 @media(min-width:720px){.feat{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1000px){.feat{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
-.card .k{font-family:var(--serif);font-size:26px;color:var(--pine);font-variant-numeric:tabular-nums}
+.card{position:relative;background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--pine)}
+.card .k{font-family:var(--serif);font-size:26px;color:var(--gold)}
 .card h3{font-size:18px;font-weight:600;margin-top:12px}
 .card p{font-size:14px;color:var(--muted);margin-top:9px;line-height:1.65}
 
-/* sovereignty split */
-.split{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
-@media(min-width:900px){.split{grid-template-columns:1fr 1fr;gap:64px}}
-.sov-list{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+/* sovereignty */
+.split{display:grid;grid-template-columns:1fr;gap:44px;align-items:center}
+@media(min-width:920px){.split{grid-template-columns:1fr 1fr;gap:64px}}
+.sov-list{margin-top:24px;display:flex;flex-direction:column;gap:16px}
 .sov-list .li{display:flex;gap:12px}
-.sov-list .li .t{color:var(--pine);font-weight:700}
+.sov-list .li .t{color:var(--gold);font-weight:700}
 .sov-list .li h4{font-size:15px;font-weight:600;color:var(--ink);margin:0}
 .sov-list .li p{font-size:13.5px;color:var(--muted);margin-top:3px}
-.file{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:24px;font-family:var(--serif)}
-.file .path{font-family:var(--sans);font-size:12.5px;color:var(--muted);background:var(--bg2);border:1px solid var(--line-2);border-radius:8px;padding:8px 12px;display:inline-block}
+.file{position:relative;background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px;font-family:var(--serif);overflow:hidden}
+.file .path{font-family:var(--sans);font-size:12.5px;color:var(--pine-d);background:var(--glass);border:1px solid var(--line-2);border-radius:8px;padding:8px 12px;display:inline-block}
 .file .grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.file .cell{border:1px solid var(--line-2);border-radius:10px;padding:12px}
+.file .cell{border:1px solid var(--line-2);border-radius:10px;padding:14px;background:var(--glass)}
 .file .cell .c-l{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
-.file .cell .c-v{font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums;margin-top:2px}
+.file .cell .c-v{font-size:24px;color:var(--ink);margin-top:2px}
 
 /* models */
-.models{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.models .m{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:14px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px}
+.models{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.models .m{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:14px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;transition:border-color .2s}
+.models .m:hover{border-color:var(--pine)}
 .models .m span{font-size:12px;font-weight:400;color:var(--muted)}
-.models .m .dot{width:7px;height:7px;border-radius:50%;background:var(--pine)}
+.models .m .d{width:7px;height:7px;border-radius:50%;background:var(--pine)}
 
 /* quickstart */
-.qs{counter-reset:qs;margin-top:40px;display:grid;grid-template-columns:1fr;gap:2px}
-@media(min-width:760px){.qs{grid-template-columns:repeat(4,1fr);gap:0}}
-.qs .q{position:relative;padding:22px;border:1px solid var(--line-2)}
-.qs .q:before{counter-increment:qs;content:counter(qs);font-family:var(--serif);font-size:13px;color:var(--pine);border:1px solid var(--pine);width:26px;height:26px;border-radius:50%;display:grid;place-items:center}
+.qs{counter-reset:qs;margin-top:44px;display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:760px){.qs{grid-template-columns:repeat(4,1fr)}}
+.qs .q{position:relative;padding:24px;border:1px solid var(--line-2);background:var(--glass)}
+.qs .q:before{counter-increment:qs;content:counter(qs);font-family:var(--serif);font-size:13px;color:var(--gold);border:1px solid var(--gold);width:26px;height:26px;border-radius:50%;display:grid;place-items:center}
 .qs .q h4{font-size:15px;font-weight:600;margin:14px 0 6px}
 .qs .q p{font-size:13px;color:var(--muted);line-height:1.6}
-.qs .q code{font-family:var(--sans);font-size:12px;background:var(--bg2);padding:2px 6px;border-radius:5px;color:var(--pine)}
-
-/* pricing */
-.price{display:grid;grid-template-columns:1fr;gap:18px;margin-top:44px;max-width:760px}
-@media(min-width:720px){.price{grid-template-columns:1fr 1fr}}
-.plan{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
-.plan.feature{border-color:var(--pine)}
-.plan .pn{font-size:14px;font-weight:600;color:var(--ink)}
-.plan .pp{font-family:var(--serif);font-size:38px;color:var(--ink);margin:10px 0 2px}
-.plan .pp small{font-family:var(--sans);font-size:14px;color:var(--muted);font-weight:400}
-.plan ul{list-style:none;padding:0;margin:18px 0 24px;display:flex;flex-direction:column;gap:10px}
-.plan li{font-size:14px;color:var(--body);display:flex;gap:9px}
-.plan li:before{content:"✓";color:var(--pine);font-weight:700}
-.tag{font-size:11px;color:var(--pine);border:1px solid var(--pine);border-radius:999px;padding:2px 9px;margin-left:8px;vertical-align:middle}
+.qs .q code{font-family:var(--sans);font-size:12px;background:var(--card);padding:2px 6px;border-radius:5px;color:var(--pine-d)}
 
 /* faq */
-.faq{margin-top:36px;max-width:760px}
+.faq{margin-top:38px;max-width:780px}
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
 .faq summary{font-size:16px;font-weight:600;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:"+";color:var(--pine);font-weight:400;font-size:20px}
-.faq details[open] summary:after{content:"–"}
+.faq summary:after{content:"+";color:var(--gold);font-weight:400;font-size:20px}
+.faq details[open] summary:after{content:"\2013"}
 .faq p{font-size:14.5px;color:var(--muted);margin-top:12px;line-height:1.7}
 
 /* cta band */
-.band{background:var(--pine);border-radius:22px;padding:56px 40px;text-align:center;margin:0 auto}
-[data-theme="dark"] .band{background:var(--bg2);border:1px solid var(--line)}
-.band h2{color:#fff;font-size:clamp(26px,3.4vw,36px);font-weight:700}
-[data-theme="dark"] .band h2{color:var(--ink)}
-.band p{color:rgba(255,255,255,.8);margin-top:14px;font-size:16px}
-[data-theme="dark"] .band p{color:var(--muted)}
-.band .btn-primary{background:#fff;color:var(--pine);margin-top:26px}
-[data-theme="dark"] .band .btn-primary{background:var(--pine);color:#15140F}
+.band{position:relative;overflow:hidden;background:linear-gradient(135deg,#1B3A2E,#0E211A);border:1px solid var(--line);border-radius:24px;padding:60px 40px;text-align:center;margin:0 auto}
+.band h2{color:#F3F5EF;font-size:clamp(27px,3.6vw,38px);font-weight:700}
+.band p{color:rgba(240,244,236,.72);margin-top:14px;font-size:16px}
+.band .cta{justify-content:center}
 
 /* footer */
-footer{border-top:1px solid var(--line-2);padding:44px 0;margin-top:20px}
+footer{border-top:1px solid var(--line-2);padding:46px 0;margin-top:20px}
 .foot{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.foot .brand{font-size:18px}
 .foot .muted{font-size:13px;color:var(--faint)}
 .foot .links{display:flex;gap:22px;font-size:13.5px;color:var(--muted)}
 .foot .links a:hover{color:var(--ink)}
 
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+/* reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
-@media(max-width:760px){
-  .nav-links{display:none}
-  #navToggle{display:grid}
-  .hero{padding:52px 0 40px}
-}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.reveal{opacity:1;transform:none;transition:none}}
-
-
-/* hero 末句：渐变艺术字 + 浅色动态光晕（Day/Night 皆可见）*/
-.hero .head .hero-last{
-  display:block; margin-top:.12em; font-weight:800; letter-spacing:.012em;
-  --g1:#2E5A49; --g2:#4E8E6E; --g3:#C9A24B;
-  --glow1:rgba(132,180,161,.42); --glow2:rgba(226,203,130,.34);
-  background-image:linear-gradient(100deg,var(--g1) 0%,var(--g2) 36%,var(--g3) 60%,var(--g2) 100%);
-  background-size:220% 100%;
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
-  animation:hero-sheen 7s linear infinite, hero-glow 3.6s ease-in-out infinite;
-  will-change:filter,background-position;
-}
-[data-theme="dark"] .hero .head .hero-last{
-  --g1:#9BC4B6; --g2:#CDE6DA; --g3:#EBD08A;
-  --glow1:rgba(180,210,199,.48); --glow2:rgba(234,215,152,.36);
-}
-@keyframes hero-sheen{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes hero-glow{
-  0%,100%{filter:drop-shadow(0 2px 10px var(--glow1))}
-  50%{filter:drop-shadow(0 3px 20px var(--glow1)) drop-shadow(0 0 14px var(--glow2))}
-}
-@media(prefers-reduced-motion:reduce){.hero .head .hero-last{animation:none;filter:none}}
+@media(max-width:760px){.nav-links{display:none}.hero{padding:60px 0 44px}section.blk{padding:70px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.reveal{opacity:1;transform:none;transition:none}.aura,.hero-last{animation:none}}
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
+<div id="prog"></div>
+
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top">MissionSeek<span class="dot">.</span></a>
+    <a class="brand" href="#top">
+      <svg class="mk" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="224" fill="#fff"/><path d="M512,182 L542.6,438.1 L653.4,370.6 L585.9,481.4 L842,512 L585.9,542.6 L653.4,653.4 L542.6,585.9 L512,842 L481.4,585.9 L370.6,653.4 L438.1,542.6 L182,512 L438.1,481.4 L370.6,370.6 L481.4,438.1 Z" fill="#2E5A49"/><circle cx="512" cy="512" r="70" fill="#fff"/><circle cx="512" cy="512" r="30" fill="#C9A24B"/></svg>
+      MissionSeek
+    </a>
     <nav class="nav-links">
-      <a href="#why">为什么</a>
-      <a href="#features">功能</a>
-      <a href="#sovereignty">数据主权</a>
-      <a href="#faq">FAQ</a>
+      <a href="#why" data-zh="为什么">Why</a>
+      <a href="#features" data-zh="功能">Features</a>
+      <a href="#sovereignty" data-zh="数据主权">Data</a>
+      <a href="#faq" data-zh="常见问题">FAQ</a>
+      <a href="https://github.com/AQ-zero/mission-seek-harness" target="_blank" rel="noopener">GitHub &#8599;</a>
     </nav>
     <div class="nav-right">
-      <button class="icon-btn" id="themeBtn" aria-label="切换主题">◐</button>
+      <div class="lang">
+        <button data-lang-btn="en">EN</button>
+        <button data-lang-btn="zh">中文</button>
+      </div>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">&#9680;</button>
     </div>
   </div>
 </header>
@@ -234,51 +238,57 @@ footer{border-top:1px solid var(--line-2);padding:44px 0;margin-top:20px}
 
 <!-- HERO -->
 <section class="hero">
+  <div class="aura pine a1"></div>
+  <div class="aura gold a2"></div>
   <div class="wrap hero-grid">
     <div>
-      <span class="h-badge">● 本地优先 · 开源自由 · 数据主权</span>
-      <h1 class="head">寻见使命，<br><span class="hero-last">复利一生。</span></h1>
-      <p class="sub">从人生终点倒推北极星，把情绪变成使命的线索，每周把洞察收敛成行动。数据只在本地，永远属于你。</p>
+      <span class="h-badge"><span class="dot"></span><span data-zh="本地优先 · 开源 · 数据主权">Local-first · Open-source · Yours</span></span>
+      <h1 class="head">
+        <span class="l1" data-zh="寻见使命，">Seek your mission.</span>
+        <span class="hero-last" data-zh="复利一生。">Compound your life.</span>
+      </h1>
+      <p class="sub" data-zh="从人生终点倒推北极星，把情绪变成使命的线索，每周把洞察收敛成行动。数据只在本地，永远属于你。">Reverse-engineer your North Star from the life you'd want remembered, turn envy / anger / flow into mission signals, and converge insight into action every week. Your data stays local — always yours.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#download">下载 · 免费开始 →</a>
-        <a class="btn btn-ghost" href="#why">看它怎么运作</a>
-        <small>本地运行 · 数据永不上云 · 自带模型密钥（GPT / Claude / DeepSeek / Kimi / GLM）</small>
+        <a class="btn btn-primary" href="#download" data-zh="免费开始 →">Get started free →</a>
+        <a class="btn btn-ghost" href="https://github.com/AQ-zero/mission-seek-harness" target="_blank" rel="noopener" data-zh="在 GitHub 查看源码 ↗">View source on GitHub &#8599;</a>
+        <small data-zh="开源 · 本地运行 · 数据永不上云 · 自带模型密钥（GPT / Claude / DeepSeek / Kimi / GLM）">Open-source · Runs locally · Never leaves your device · Bring your own key (GPT / Claude / DeepSeek / Kimi / GLM)</small>
       </div>
     </div>
     <div class="mock reveal" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i></div>
-      <div class="lbl">北极星 · 你想被记住的样子</div>
-      <div class="aim"><span>把复杂的问题，讲成别人能行动的答案。</span><span>在场时，让人更有底气。</span></div>
+      <div class="lbl" data-zh="北极星 · 你想被记住的样子">North Star · how you want to be remembered</div>
+      <div class="aim"><span data-zh="把复杂的问题，讲成别人能行动的答案。">Turn hard problems into answers people can act on.</span><span data-zh="在场时，让人更有底气。">Make the room braver for being in it.</span></div>
       <div class="ns">
         <div class="big">7</div>
-        <div class="cap">本周因系统而<br>多做成的真实的事</div>
+        <div class="cap" data-zh="本周因系统而<br>多做成的真实的事">real things done this week<br>because of the system</div>
       </div>
-      <div class="row"><span class="d"></span> 决策校准 · Brier 0.18 ↓ 判断在变准</div>
-      <div class="chip"><b>→ AI 提炼：</b>你最近三次"嫉妒"都指向同一件事——公开表达。这可能是使命信号。</div>
+      <div class="row"><span class="d"></span> <span data-zh="决策校准 · Brier 0.18 ↓ 判断在变准">Decision calibration · Brier 0.18 ↓ getting sharper</span></div>
+      <div class="chip"><b data-zh="→ AI 提炼：">&#8594; AI insight:</b> <span data-zh="你最近三次"嫉妒"都指向同一件事——公开表达。这可能是使命信号。">Your last three sparks of envy all point to one thing — speaking in public. That may be a mission signal.</span></div>
     </div>
   </div>
 </section>
 
 <div class="trust"><div class="wrap trust-in">
-  <span><b>本地</b> SQLite，不上云</span>
-  <span><b>一键</b>导出 / 整库迁移</span>
-  <span><b>自带</b>模型密钥，成本你控</span>
-  <span><b>像 Obsidian</b> 一样，数据是你的一个文件</span>
+  <span><b>Local</b> <span data-zh="SQLite，不上云">SQLite, no cloud</span></span>
+  <span><b data-zh="一键">One-click</b> <span data-zh="导出 / 整库迁移">export / migrate</span></span>
+  <span><b data-zh="自带">Bring your own</b> <span data-zh="模型密钥，成本你控">key, you control cost</span></span>
+  <span><b>Like Obsidian</b> — <span data-zh="数据是你的一个文件">your data is one local file</span></span>
 </div></div>
 
 <!-- WHY -->
 <section class="blk" id="why">
+  <div class="aura teal" style="width:520px;height:520px;left:-180px;top:20%;animation:drift 24s ease-in-out infinite"></div>
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">为什么是它</span>
-      <h2 style="margin-top:14px;white-space:nowrap;font-size:clamp(15px,4.2vw,38px)">真正稀缺的，从不是记录，而是判断力。</h2>
-      <p>目标每年重设，判断力却从不复利；你收藏了上百套方法论，对自己的模型依旧模糊。MissionSeek 把「记录 → 洞察 → 行动 → 验证」做成一个真实闭环——不是又一个待办清单，而是一台帮你把自己想清楚、并验证有没有想对的机器。</p>
+      <span class="eyebrow" data-zh="为什么是它">Why MissionSeek</span>
+      <h2 data-zh="真正稀缺的，从不是记录，而是判断力。">What's scarce isn't records — it's judgment.</h2>
+      <p data-zh="目标每年重设，判断力却从不复利；你收藏了上百套方法论，对自己的模型依旧模糊。MissionSeek 把「记录 → 洞察 → 行动 → 验证」做成一个真实闭环——不是又一个待办清单，而是一台帮你把自己想清楚、并验证有没有想对的机器。">You reset goals every year, yet your judgment never compounds; you've saved a hundred frameworks and your model of yourself is still blurry. MissionSeek makes record → insight → action → verification a real loop — not another to-do list, but a machine that helps you think yourself clear and check whether you were right.</p>
     </div>
     <div class="loop">
-      <div class="step reveal"><div class="n">01</div><h3>记录</h3><p>讣告、决策、情绪信号、每周复盘——低摩擦捕获真实输入。</p></div>
-      <div class="step reveal"><div class="n">02</div><h3>洞察</h3><p>AI 唱反调、提炼线索，把噪音聚成使命假设与判断偏差。</p></div>
-      <div class="step reveal"><div class="n">03</div><h3>行动</h3><p>每周收敛成 ≤3 个下一步，只留会推动北极星的那几件。</p></div>
-      <div class="step reveal"><div class="n">04</div><h3>验证</h3><p>决策到期对账、技能要证据背书——用事实校准，而非自我感觉。</p></div>
+      <div class="step reveal"><div class="n">01</div><h3 data-zh="记录">Record</h3><p data-zh="讣告、决策、情绪信号、每周复盘——低摩擦捕获真实输入。">Eulogy, decisions, emotion signals, weekly review — capture real input with low friction.</p></div>
+      <div class="step reveal"><div class="n">02</div><h3 data-zh="洞察">Insight</h3><p data-zh="AI 唱反调、提炼线索，把噪音聚成使命假设与判断偏差。">The AI plays devil's advocate and distills signal — noise becomes mission hypotheses and calibration gaps.</p></div>
+      <div class="step reveal"><div class="n">03</div><h3 data-zh="行动">Action</h3><p data-zh="每周收敛成 ≤3 个下一步，只留会推动北极星的那几件。">Converge to ≤3 next steps a week — only what moves your North Star.</p></div>
+      <div class="step reveal"><div class="n">04</div><h3 data-zh="验证">Verify</h3><p data-zh="决策到期对账、技能要证据背书——用事实校准，而非自我感觉。">Decisions get scored on the date; skills need evidence — calibrate against facts, not vibes.</p></div>
     </div>
   </div>
 </section>
@@ -287,43 +297,44 @@ footer{border-top:1px solid var(--line-2);padding:44px 0;margin-top:20px}
 <section class="blk" id="features" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">与众不同之处</span>
-      <h2 style="margin-top:14px;white-space:nowrap;font-size:clamp(15px,4.2vw,38px)">六个别处没有、且会随时间增值的机制。</h2>
-      <p>每一个都为「今天就有用、并且长期复利」而设计——难以被复制，因为它长在你自己的数据和历史上。</p>
+      <span class="eyebrow" data-zh="与众不同之处">What's inside</span>
+      <h2 data-zh="六个别处没有、且会随时间增值的机制。">Six mechanisms you won't find elsewhere — and that compound over time.</h2>
+      <p data-zh="每一个都为「今天就有用、并且长期复利」而设计——难以被复制，因为它长在你自己的数据和历史上。">Each is built to be useful today and to compound long term — hard to copy, because it grows on your own data and history.</p>
     </div>
     <div class="feat">
-      <div class="card reveal"><div class="k">01</div><h3>讣告北极星</h3><p>不设 KPI，而是从人生终点倒推方向。AI 陪你把「想被如何记住」想清楚，成为整个系统的定盘星。</p></div>
-      <div class="card reveal"><div class="k">02</div><h3>决策校准</h3><p>每个决策押上置信度，到期强制对账。Brier 分让你第一次看见自己判断力的真实曲线——并逐周变准。</p></div>
-      <div class="card reveal"><div class="k">03</div><h3>使命信号雷达</h3><p>嫉妒、愤怒、心流不是情绪，是使命的线索。AI 把散落的信号聚成可检验的使命假设。</p></div>
-      <div class="card reveal"><div class="k">04</div><h3>能力账本 · 折旧</h3><p>技能会「贬值」。等级必须有证据背书，否则封顶 L1——防自嗨，只认真实产出。</p></div>
-      <div class="card reveal"><div class="k">05</div><h3>对抗式每周复盘</h3><p>AI 主动唱反调，逼你面对没做的和自欺的，收敛出下周 ≤3 个行动与本周 North Star。</p></div>
-      <div class="card reveal"><div class="k">06</div><h3>反目标 & 低潮协议</h3><p>负面空间当机会过滤器；趁状态好时写好低谷预案。护栏，而非鸡汤。</p></div>
+      <div class="card reveal"><div class="k">01</div><h3 data-zh="讣告北极星">Eulogy North Star</h3><p data-zh="不设 KPI，而是从人生终点倒推方向。AI 陪你把「想被如何记住」想清楚，成为整个系统的定盘星。">No KPIs — derive direction from the end of your life. The AI helps you think through how you'd want to be remembered; it becomes the system's fixed star.</p></div>
+      <div class="card reveal"><div class="k">02</div><h3 data-zh="决策校准">Decision calibration</h3><p data-zh="每个决策押上置信度，到期强制对账。Brier 分让你第一次看见自己判断力的真实曲线——并逐周变准。">Stake a confidence on every decision; reconcile on the due date. A Brier score shows the real curve of your judgment — and sharpens it week by week.</p></div>
+      <div class="card reveal"><div class="k">03</div><h3 data-zh="使命信号雷达">Mission-signal radar</h3><p data-zh="嫉妒、愤怒、心流不是情绪，是使命的线索。AI 把散落的信号聚成可检验的使命假设。">Envy, anger, flow aren't just feelings — they point at what you're for. The AI clusters scattered signals into testable mission hypotheses.</p></div>
+      <div class="card reveal"><div class="k">04</div><h3 data-zh="能力账本 · 折旧">Capability ledger</h3><p data-zh="技能会「贬值」。等级必须有证据背书，否则封顶 L1——防自嗨，只认真实产出。">Skills depreciate. A level needs evidence or caps at L1 — no imaginary résumés, only real output.</p></div>
+      <div class="card reveal"><div class="k">05</div><h3 data-zh="对抗式每周复盘">Adversarial weekly review</h3><p data-zh="AI 主动唱反调，逼你面对没做的和自欺的，收敛出下周 ≤3 个行动与本周 North Star。">The AI argues back, makes you face what you avoided, and converges next week's ≤3 actions and this week's North Star.</p></div>
+      <div class="card reveal"><div class="k">06</div><h3 data-zh="反目标 & 低潮协议">Anti-goals &amp; low-point protocol</h3><p data-zh="负面空间当机会过滤器；趁状态好时写好低谷预案。护栏，而非鸡汤。">Name what you refuse to become; pre-commit a plan for the bad weeks while you're clear. Guardrails, not platitudes.</p></div>
     </div>
   </div>
 </section>
 
 <!-- SOVEREIGNTY -->
 <section class="blk" id="sovereignty">
+  <div class="aura pine" style="width:480px;height:480px;right:-160px;top:10%;animation:drift 28s ease-in-out infinite reverse"></div>
   <div class="wrap split">
     <div class="reveal">
-      <span class="eyebrow">数据主权</span>
-      <h2 style="margin-top:14px;font-size:clamp(26px,3.6vw,38px)">你的一生，不该躺在别人的服务器上。</h2>
+      <span class="eyebrow" data-zh="数据主权">Data sovereignty</span>
+      <h2 style="margin-top:14px;font-size:clamp(27px,3.6vw,40px)" data-zh="你的一生，不该躺在别人的服务器上。">Your life shouldn't live on someone else's server.</h2>
       <div class="sov-list">
-        <div class="li"><span class="t">✓</span><div><h4>本地存储，永不上云</h4><p>全部数据是本地一个 SQLite 文件，只在你的机器上。</p></div></div>
-        <div class="li"><span class="t">✓</span><div><h4>自带模型密钥</h4><p>填你自己的 API Key，隐私你留、成本你控；密钥只写本地。</p></div></div>
-        <div class="li"><span class="t">✓</span><div><h4>一键导出 · 整库迁移</h4><p>导出 JSON，或整库复制一个文件搬到新机器——像 Obsidian 搬 vault。</p></div></div>
-        <div class="li"><span class="t">✓</span><div><h4>无锁定</h4><p>数据格式开放、可随时带走。停止付费，数据依然是你的。</p></div></div>
+        <div class="li"><span class="t">&#10003;</span><div><h4 data-zh="本地存储，永不上云">Local storage, never uploaded</h4><p data-zh="全部数据是本地一个 SQLite 文件，只在你的机器上。">All your data is one local SQLite file, only on your machine.</p></div></div>
+        <div class="li"><span class="t">&#10003;</span><div><h4 data-zh="自带模型密钥">Bring your own key</h4><p data-zh="填你自己的 API Key，隐私你留、成本你控；密钥只写本地。">Use your own API key — privacy stays yours, cost is yours; the key is written locally only.</p></div></div>
+        <div class="li"><span class="t">&#10003;</span><div><h4 data-zh="一键导出 · 整库迁移">One-click export · full migrate</h4><p data-zh="导出 JSON，或整库复制一个文件搬到新机器——像 Obsidian 搬 vault。">Export JSON, or copy one file to a new machine — like moving an Obsidian vault.</p></div></div>
+        <div class="li"><span class="t">&#10003;</span><div><h4 data-zh="无锁定 · 开源">No lock-in · open-source</h4><p data-zh="数据格式开放、代码 AGPL 开源，可随时带走。停止使用，数据依然是你的。">Open format, AGPL-licensed code — leave anytime. Stop using it and your data is still yours.</p></div></div>
       </div>
     </div>
     <div class="file reveal">
       <div class="path">~/MissionSeek/data/mission-seek.db</div>
       <div class="grid">
-        <div class="cell"><div class="c-l">决策已对账</div><div class="c-v tnum">42</div></div>
-        <div class="cell"><div class="c-l">Brier 分</div><div class="c-v tnum">0.18</div></div>
-        <div class="cell"><div class="c-l">使命信号</div><div class="c-v tnum">130</div></div>
-        <div class="cell"><div class="c-l">连续复盘</div><div class="c-v tnum">36<span style="font-size:13px"> 周</span></div></div>
+        <div class="cell"><div class="c-l" data-zh="决策已对账">Decisions scored</div><div class="c-v">42</div></div>
+        <div class="cell"><div class="c-l">Brier</div><div class="c-v">0.18</div></div>
+        <div class="cell"><div class="c-l" data-zh="使命信号">Mission signals</div><div class="c-v">130</div></div>
+        <div class="cell"><div class="c-l" data-zh="连续复盘">Review streak</div><div class="c-v">36<span style="font-size:13px"> wk</span></div></div>
       </div>
-      <p style="font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6">整个「仓库」就是这一个文件。备份、迁移、加密，全在你手里。</p>
+      <p style="font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6" data-zh="整个「仓库」就是这一个文件。备份、迁移、加密，全在你手里。">The whole vault is this one file. Backup, migrate, encrypt — all in your hands.</p>
     </div>
   </div>
 </section>
@@ -332,96 +343,62 @@ footer{border-top:1px solid var(--line-2);padding:44px 0;margin-top:20px}
 <section class="blk" id="models" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">自带模型</span>
-      <h2 style="margin-top:14px">用你信任的模型，填你自己的 Key。</h2>
-      <p>界面里一键切换，无需改配置文件。国内外主流模型全支持，按需选性价比或长上下文。</p>
+      <span class="eyebrow" data-zh="自带模型">Bring your own model</span>
+      <h2 data-zh="用你信任的模型，填你自己的 Key。">Use the model you trust, with your own key.</h2>
+      <p data-zh="界面里一键切换，无需改配置文件。国内外主流模型全支持，按需选性价比或长上下文，也可完全离线跑 Ollama。">Switch in-app, no config files. All major providers supported — pick value or long context, or run fully offline with Ollama.</p>
     </div>
     <div class="models reveal">
-      <div class="m"><span class="dot"></span>OpenAI · GPT</div>
-      <div class="m"><span class="dot"></span>Claude · Anthropic</div>
-      <div class="m"><span class="dot"></span>DeepSeek <span>性价比</span></div>
-      <div class="m"><span class="dot"></span>Kimi · Moonshot <span>长上下文</span></div>
-      <div class="m"><span class="dot"></span>GLM · 智谱 <span>免费额度</span></div>
+      <div class="m"><span class="d"></span>OpenAI · GPT</div>
+      <div class="m"><span class="d"></span>Claude · Anthropic</div>
+      <div class="m"><span class="d"></span>DeepSeek <span data-zh="性价比">value</span></div>
+      <div class="m"><span class="d"></span>Kimi · Moonshot <span data-zh="长上下文">long context</span></div>
+      <div class="m"><span class="d"></span>GLM · Zhipu</div>
+      <div class="m"><span class="d"></span>Ollama <span data-zh="离线">offline</span></div>
     </div>
   </div>
 </section>
 
-<!-- QUICKSTART / DOWNLOAD -->
+<!-- DOWNLOAD -->
 <section class="blk" id="download">
+  <div class="aura gold" style="width:460px;height:460px;left:40%;top:-120px;animation:drift 30s ease-in-out infinite"></div>
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">五分钟上手</span>
-      <h2 style="margin-top:14px">下载，然后写下你的第一份讣告。</h2>
+      <span class="eyebrow" data-zh="五分钟上手">Five minutes to start</span>
+      <h2 data-zh="下载，然后写下你的第一份讣告。">Get it, then write your first eulogy.</h2>
     </div>
     <div class="qs reveal">
-      <div class="q"><h4>下载并安装</h4><p>macOS / Windows 本地应用，或自行部署源码。</p></div>
-      <div class="q"><h4>一键初始化</h4><p>运行 <code>npm run setup</code>，自动建库、就绪。</p></div>
-      <div class="q"><h4>选模型填 Key</h4><p>设置里选服务商，粘贴你自己的 API Key。</p></div>
-      <div class="q"><h4>写讣告</h4><p>约 15 分钟，点亮你的北极星，系统开始转动。</p></div>
+      <div class="q"><h4 data-zh="下载或自建">Download or build</h4><p data-zh="macOS / Windows 本地应用，或从源码自行构建。">macOS / Windows desktop app, or build from source.</p></div>
+      <div class="q"><h4 data-zh="一键初始化">One-click setup</h4><p><span data-zh="运行 ">Run </span><code>npm run setup</code><span data-zh="，自动建库、就绪。"> — builds the DB, ready to go.</span></p></div>
+      <div class="q"><h4 data-zh="选模型填 Key">Pick a model</h4><p data-zh="设置里选服务商，粘贴你自己的 API Key。">Choose a provider in Settings and paste your own API key.</p></div>
+      <div class="q"><h4 data-zh="写讣告">Write the eulogy</h4><p data-zh="约 15 分钟，点亮你的北极星，系统开始转动。">~15 minutes to light up your North Star and start the loop.</p></div>
     </div>
-    <div class="cta reveal" style="margin-top:34px">
-      <a class="btn btn-primary" href="#">下载 macOS（即将开放）</a>
-      <a class="btn btn-ghost" href="#">下载 Windows（即将开放）</a>
+    <div class="cta reveal" style="margin-top:36px">
+      <a class="btn btn-primary" href="https://github.com/AQ-zero/mission-seek-harness/releases" target="_blank" rel="noopener" data-zh="下载桌面版 · GitHub Releases ↗">Download · GitHub Releases &#8599;</a>
+      <a class="btn btn-ghost" href="https://github.com/AQ-zero/mission-seek-harness#-quick-start" target="_blank" rel="noopener" data-zh="或自行构建">Or build from source</a>
     </div>
-  </div>
-</section>
-
-<!-- PRICING — 暂时隐藏（聚人气阶段）。删掉下面 style 里的 display:none; 即可恢复整段定价。 -->
-<section class="blk" id="pricing" style="display:none;background:var(--bg2)">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">价格</span>
-      <h2 style="margin-top:14px;white-space:nowrap;font-size:clamp(15px,4.2vw,38px)">代码开源免费。省心版一次买断，无订阅。</h2>
-      <p>源码 AGPL 开源、可自建自改；想省心就买签名安装版。模型费用直接付给你选的服务商，我们不加价、不碰你的数据。</p>
-    </div>
-    <div class="price">
-      <div class="plan reveal">
-        <div class="pn">开源版 · 免费</div>
-        <div class="pp">¥0 <small>/ AGPL 开源</small></div>
-        <ul>
-          <li>完整核心闭环</li>
-          <li>源码开放 · 自建自改</li>
-          <li>本地存储 · 数据主权</li>
-          <li>自带模型密钥</li>
-        </ul>
-        <a class="btn btn-ghost" href="#download">下载 / 自建</a>
-      </div>
-      <div class="plan feature reveal">
-        <div class="pn">省心版 · 预编译<span class="tag">占位价</span></div>
-        <div class="pp">¥299 <small>/ 一次买断</small></div>
-        <ul>
-          <li>签名版桌面安装包（Win / Mac）</li>
-          <li>免编译 · 开箱即用</li>
-          <li>一键更新 · 优先支持</li>
-          <li>支持项目长期开发</li>
-        </ul>
-        <a class="btn btn-primary" href="#download">购买（即将开放）</a>
-      </div>
-    </div>
-    <p style="font-size:12.5px;color:var(--faint);margin-top:18px">价格为占位示意，最终以正式发布为准。</p>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="blk" id="faq">
+<section class="blk" id="faq" style="background:var(--bg2)">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">常见问题</span><h2 style="margin-top:14px">你可能想问的</h2></div>
+    <div class="sec-head reveal"><span class="eyebrow" data-zh="常见问题">FAQ</span><h2 data-zh="你可能想问的">Questions you might have</h2></div>
     <div class="faq reveal">
-      <details open><summary>我的数据存在哪里？会上传吗？</summary><p>全部存在你本机的一个 SQLite 文件里，永不上云。只有当你使用 AI 功能时，相关文本才会发到你自己配置的模型服务商（且发送前做敏感信息脱敏）。</p></details>
-      <details><summary>需要联网吗？</summary><p>核心记录、复盘、账本全部离线可用。只有 AI 追问 / 提炼 / 对抗式复盘需要联网调用你选的模型。也支持本地 Ollama，完全离线。</p></details>
-      <details><summary>支持哪些 AI 模型？</summary><p>GPT、Claude、DeepSeek、Kimi、GLM 任选，界面内填自己的 Key 即可切换。费用直接付给服务商，我们不加价。</p></details>
-      <details><summary>能跨设备同步吗？</summary><p>不做云同步——这是刻意的设计，为了数据主权。换设备时，导出 JSON 或整库复制那个文件即可，像搬 Obsidian 的 vault 一样无损。</p></details>
-      <details><summary>为什么不是打卡 / 待办 App？</summary><p>打卡让你记录，却不让你成长。MissionSeek 的每个机制都为「判断力和方向感的复利」而设计：决策要对账、技能要证据、情绪当信号、每周被 AI 唱反调。</p></details>
-      <details><summary>它开源吗？我能自己改吗？</summary><p>是。MissionSeek 以 AGPL-3.0 开源——你可以自由查看、修改、自建，并在 GitHub 一起共建。</p></details>
+      <details open><summary data-zh="我的数据存在哪里？会上传吗？">Where is my data stored? Is it uploaded?</summary><p data-zh="全部存在你本机的一个 SQLite 文件里，永不上云。只有当你使用 AI 功能时，相关文本才会发到你自己配置的模型服务商（且发送前做敏感信息脱敏）。">Everything lives in one local SQLite file — never uploaded. Only when you use AI does relevant text go to the provider you configured (redacted first).</p></details>
+      <details><summary data-zh="需要联网吗？">Do I need to be online?</summary><p data-zh="核心记录、复盘、账本全部离线可用。只有 AI 追问 / 提炼 / 对抗式复盘需要联网调用你选的模型。也支持本地 Ollama，完全离线。">Recording, review and the ledgers all work offline. Only AI follow-ups / synthesis / adversarial review call your chosen model. Local Ollama works fully offline.</p></details>
+      <details><summary data-zh="支持哪些 AI 模型？">Which AI models are supported?</summary><p data-zh="GPT、Claude、DeepSeek、Kimi、GLM 任选，界面内填自己的 Key 即可切换。费用直接付给服务商，我们不加价。">GPT, Claude, DeepSeek, Kimi, GLM — switch by pasting your own key in-app. You pay the provider directly; we add no markup.</p></details>
+      <details><summary data-zh="能跨设备同步吗？">Can it sync across devices?</summary><p data-zh="不做云同步——这是刻意的设计，为了数据主权。换设备时，导出 JSON 或整库复制那个文件即可，像搬 Obsidian 的 vault 一样无损。">No cloud sync — a deliberate choice for data sovereignty. To move devices, export JSON or copy the one file, lossless, like moving an Obsidian vault.</p></details>
+      <details><summary data-zh="它开源吗？我能自己改吗？">Is it open-source? Can I modify it?</summary><p data-zh="是。MissionSeek 以 AGPL-3.0 开源——你可以自由查看、修改、自建，并在 GitHub 一起共建。">Yes. MissionSeek is open-source under AGPL-3.0 — read it, modify it, build it, and contribute on GitHub.</p></details>
     </div>
   </div>
 </section>
 
-<!-- CTA BAND -->
+<!-- CTA -->
 <section class="blk"><div class="wrap"><div class="band reveal">
-  <h2>把人生，活成一个会复利的系统。</h2>
-  <p>今天就开始，让每一次记录都为未来的你积累。</p>
-  <a class="btn btn-primary" href="#download">免费开始 MissionSeek →</a>
+  <div class="aura gold" style="width:420px;height:300px;right:-80px;top:-60px;animation:drift 26s ease-in-out infinite"></div>
+  <h2 data-zh="把人生，活成一个会复利的系统。">Live your one life as a compounding system.</h2>
+  <p data-zh="今天就开始，让每一次记录都为未来的你积累。">Start today, and let every entry accrue for the you to come.</p>
+  <div class="cta"><a class="btn btn-primary" href="#download" data-zh="免费开始 MissionSeek →">Get started free →</a></div>
 </div></div></section>
 
 </main>
@@ -429,29 +406,52 @@ footer{border-top:1px solid var(--line-2);padding:44px 0;margin-top:20px}
 <footer>
   <div class="wrap foot">
     <div>
-      <div class="brand" style="font-size:18px">MissionSeek<span class="dot">.</span></div>
-      <div class="muted" style="margin-top:6px">寻见使命，复利一生 · 本地优先 · 开源</div>
+      <div class="brand" style="gap:8px"><svg class="mk" viewBox="0 0 1024 1024" aria-hidden="true" style="width:20px;height:20px"><rect width="1024" height="1024" rx="224" fill="#fff"/><path d="M512,182 L542.6,438.1 L653.4,370.6 L585.9,481.4 L842,512 L585.9,542.6 L653.4,653.4 L542.6,585.9 L512,842 L481.4,585.9 L370.6,653.4 L438.1,542.6 L182,512 L438.1,481.4 L370.6,370.6 L481.4,438.1 Z" fill="#2E5A49"/><circle cx="512" cy="512" r="70" fill="#fff"/><circle cx="512" cy="512" r="30" fill="#C9A24B"/></svg> MissionSeek</div>
+      <div class="muted" style="margin-top:8px" data-zh="寻见使命，复利一生 · 本地优先 · 开源">Seek your mission. Compound your life. · Local-first · Open-source</div>
     </div>
     <div class="links">
-      <a href="#features">功能</a>
-      <a href="#sovereignty">数据主权</a>
-      <a href="#faq">FAQ</a>
+      <a href="#features" data-zh="功能">Features</a>
+      <a href="#sovereignty" data-zh="数据主权">Data</a>
+      <a href="#faq" data-zh="常见问题">FAQ</a>
+      <a href="https://github.com/AQ-zero/mission-seek-harness" target="_blank" rel="noopener">GitHub &#8599;</a>
     </div>
   </div>
-  <div class="wrap" style="margin-top:24px"><div class="muted" style="font-size:12px">© 2026 MissionSeek · 一人公司出品</div></div>
+  <div class="wrap" style="margin-top:24px"><div class="muted" style="font-size:12px">&#169; 2026 MissionSeek</div></div>
 </footer>
 
 <script>
 (function(){
-  var root=document.documentElement, KEY='pos-site-theme';
-  try{var s=localStorage.getItem(KEY); if(s){root.setAttribute('data-theme',s);} else if(matchMedia('(prefers-color-scheme:dark)').matches){root.setAttribute('data-theme','dark');}}catch(e){}
-  document.getElementById('themeBtn').addEventListener('click',function(){
-    var d=root.getAttribute('data-theme')==='dark'?'':'dark';
-    root.setAttribute('data-theme',d);
-    try{localStorage.setItem(KEY,d||'light');}catch(e){}
+  var root=document.documentElement;
+  var TK='ms-site-theme', LK='ms-site-lang';
+  try{ if(localStorage.getItem(TK)==='light') root.setAttribute('data-theme','light'); }catch(e){}
+  var lang='en';
+  try{ if(localStorage.getItem(LK)==='zh') lang='zh'; }catch(e){}
+  // cache the default (English) markup, then translate
+  document.querySelectorAll('[data-zh]').forEach(function(el){ el.setAttribute('data-en', el.innerHTML); });
+  function applyLang(L){
+    root.setAttribute('lang', L==='zh'?'zh':'en');
+    document.querySelectorAll('[data-zh]').forEach(function(el){
+      var v=el.getAttribute('data-'+L); if(v!=null) el.innerHTML=v;
+    });
+    document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-lang-btn')===L); });
+    try{ localStorage.setItem(LK,L); }catch(e){}
+  }
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang-btn')); });
   });
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  applyLang(lang);
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var toLight = root.getAttribute('data-theme')!=='light';
+    if(toLight) root.setAttribute('data-theme','light'); else root.removeAttribute('data-theme');
+    try{ localStorage.setItem(TK, toLight?'light':'dark'); }catch(e){}
+  });
+  // reveal on scroll (staggered)
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el,i){ el.style.transitionDelay=((i%3)*80)+'ms'; io.observe(el); });
+  // scroll progress bar
+  var prog=document.getElementById('prog');
+  function onScroll(){ var h=document.documentElement, b=document.body; var st=h.scrollTop||b.scrollTop; var mx=(h.scrollHeight-h.clientHeight)||1; prog.style.width=(Math.min(1,st/mx)*100)+'%'; }
+  addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll); onScroll();
 })();
 </script>
 </body>

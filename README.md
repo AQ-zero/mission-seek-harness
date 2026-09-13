@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./site/cover.svg" alt="MissionSeek — seek your mission, compound your life" width="840">
+<img src="./site/cover.png" alt="MissionSeek — seek your mission, compound your life" width="840">
 
 ### Seek your mission. Compound your life.
 
@@ -129,6 +129,16 @@ src/app/**           # pages, Server Actions, API routes
 electron/            # desktop shell (runs the standalone Next server locally)
 site/                # marketing landing page (static)
 ```
+
+## 🗺️ Status & roadmap
+
+MissionSeek is **early but usable** — the full loop works today, and it's open now so it can grow in the open.
+
+- ✅ **Shipped** — the six mechanisms above, local-first SQLite storage, one-click JSON export, multi-provider AI, bilingual UI (EN / 中文), and desktop builds for Windows / macOS / Linux.
+- 🔜 **Next** — progressive onboarding, a compounding "self-model" visualization, and richer calibration feedback.
+- 💡 **Ideas & bugs** — [open an issue](https://github.com/AQ-zero/mission-seek-harness/issues) or start a [discussion](https://github.com/AQ-zero/mission-seek-harness/discussions).
+
+If the idea resonates, a ⭐ helps others find it.
 
 ## 🤝 Contributing
 
