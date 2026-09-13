@@ -1,0 +1,43 @@
+# ---- dependencies / build output ----
+node_modules/
+.next/
+out/
+release/
+tsconfig.tsbuildinfo
+
+# electron-builder assets: ignore everything under build/ except the committed icons
+/build/*
+!/build/icon.ico
+!/build/icon.png
+
+# ============================================================
+#  SECRETS & LOCAL DATA — never commit (belt-and-suspenders)
+# ============================================================
+# env files: ignore all, but keep the checked-in template
+.env
+.env.*
+!.env.example
+
+# local database (contains user data AND the in-app API key) + backups
+data/
+!data/.gitkeep
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+drizzle/*.sqlite
+
+# electron per-user session key
+auth-secret
+
+# ---- logs / OS cruft ----
+*.log
+.DS_Store
+Thumbs.db
+
+# ---- internal / agent-only (never belong in the public repo) ----
+MEMORY.md
+AGENTS.md
+Claude outputs/
+docs/
+prototypes/

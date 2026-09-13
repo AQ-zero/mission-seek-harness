@@ -1,0 +1,49 @@
+name: 🐞 Bug report / 问题反馈
+description: Something didn't work as expected. / 有功能没按预期工作。
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened? / 发生了什么？
+      description: What did you do, what did you expect, what happened instead? / 你做了什么、期望什么、实际发生了什么？
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where / 在哪里
+      options:
+        - Desktop app (Electron) / 桌面应用
+        - Local dev (npm run dev) / 本地开发
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version & OS / 版本与系统
+      placeholder: "e.g. v0.1.8, Windows 11"
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: AI provider (if relevant) / AI 服务商（若相关）
+      placeholder: "e.g. DeepSeek, Ollama — do NOT paste your API key / 切勿粘贴你的 API key"
+  - type: checkboxes
+    id: no-secrets
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have not included any API key or personal data. / 我没有附上任何 API key 或隐私数据。
+          required: true

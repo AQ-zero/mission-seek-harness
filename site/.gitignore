@@ -1,0 +1,10 @@
+# The installer is ~134 MB — too big for GitHub Pages (100 MB/file limit).
+# It ships via GitHub Releases instead, and is NOT committed here.
+download/*.exe
+download/*.dmg
+download/*.zip
+!download/.gitkeep
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

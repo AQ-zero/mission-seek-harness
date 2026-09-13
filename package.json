@@ -1,0 +1,130 @@
+{
+  "name": "mission-seek",
+  "version": "0.1.8",
+  "description": "MissionSeek — a local-first, compounding personal-growth system. Record → insight → action → verification, steered by an eulogy North Star and an adversarial weekly review, with a pluggable LLM. Your data stays in one local SQLite file; bring your own model key.",
+  "license": "AGPL-3.0-or-later",
+  "author": "AQ-zero",
+  "homepage": "https://github.com/AQ-zero/mission-seek-harness#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AQ-zero/mission-seek-harness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AQ-zero/mission-seek-harness/issues"
+  },
+  "keywords": [
+    "personal-growth",
+    "local-first",
+    "self-improvement",
+    "electron",
+    "nextjs",
+    "sqlite",
+    "llm",
+    "second-brain"
+  ],
+  "private": false,
+  "main": "electron/main.js",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx src/db/seed.ts",
+    "desktop": "next build && node scripts/copy-standalone.mjs && electron .",
+    "dist": "next build && electron-builder",
+    "dist:win": "next build && electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.missionseek.app",
+    "productName": "MissionSeek",
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": ".next/standalone",
+        "to": "app"
+      },
+      {
+        "from": ".next/static",
+        "to": "app/.next/static"
+      },
+      {
+        "from": "public",
+        "to": "app/public"
+      },
+      {
+        "from": "build/icon.png",
+        "to": "icon.png"
+      },
+      {
+        "from": "build/icon.ico",
+        "to": "icon.ico"
+      }
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "MissionSeek-Setup.exe",
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": "universal"
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "artifactName": "MissionSeek.dmg",
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    }
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.36.4",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@types/sql.js": "^1.4.9",
+    "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.28.1",
+    "electron": "^32.2.0",
+    "electron-builder": "^25.1.8",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  },
+  "overrides": {
+    "@electron/node-gyp": "npm:node-gyp@^10.2.0"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.19.12": true,
+    "esbuild@0.28.2": true,
+    "electron@32.3.3": true
+  }
+}

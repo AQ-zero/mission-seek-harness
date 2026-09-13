@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Songti SC', 'Noto Serif SC', serif;
+}
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  @apply bg-neutral-50 text-neutral-700;
+}
+.dark body {
+  @apply bg-neutral-950 text-neutral-100;
+}
+
+/* 更自信的标题：轻微收紧字距 */
+h1, h2, h3 {
+  text-wrap: balance;
+  letter-spacing: -0.008em;
+}
+
+/* font-mono 已复用 sans，只保留数字对齐 */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 平滑的交互过渡（大厂质感） */
+a, button {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+::selection {
+  background: rgba(46, 90, 73, 0.15);
+}
+
+:focus-visible {
+  outline: 2px solid #2e5a49;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- AI 助理卡通图标动效 ---- */
+@keyframes pos-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2.5px)} }
+@keyframes pos-blink { 0%,90%,100%{transform:scaleY(1)} 95%{transform:scaleY(0.1)} }
+@keyframes pos-tw { 0%,100%{opacity:.5;transform:scale(.75) rotate(0deg)} 50%{opacity:1;transform:scale(1.15) rotate(15deg)} }
+@keyframes pos-pulse { 0%{transform:scale(.92);opacity:.55} 70%{transform:scale(1.55);opacity:0} 100%{opacity:0} }
+.pos-bob{ animation:pos-bob 3s ease-in-out infinite }
+.pos-eye{ transform-origin:center; transform-box:fill-box; animation:pos-blink 5s ease-in-out infinite }
+.pos-tw{ transform-origin:center; transform-box:fill-box; animation:pos-tw 2.6s ease-in-out infinite }
+.pos-ring{ animation:pos-pulse 2.8s ease-out infinite }
+@media (prefers-reduced-motion: reduce){ .pos-bob,.pos-eye,.pos-tw,.pos-ring{ animation:none } }
+
+/* ---- 登录/创建账户页：品牌艺术字 + 浅色动态光晕 ---- */
+.auth-brand{
+  background-image:linear-gradient(100deg,#2E5A49 0%,#4E8E6E 38%,#C9A24B 62%,#4E8E6E 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:auth-sheen 7s linear infinite, auth-glow 3.6s ease-in-out infinite;
+}
+.dark .auth-brand{ background-image:linear-gradient(100deg,#9BC4B6 0%,#CDE6DA 38%,#EBD08A 62%,#9BC4B6 100%); }
+@keyframes auth-sheen{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes auth-glow{
+  0%,100%{filter:drop-shadow(0 2px 10px rgba(132,180,161,.42))}
+  50%{filter:drop-shadow(0 3px 20px rgba(132,180,161,.42)) drop-shadow(0 0 14px rgba(226,203,130,.34))}
+}
+.auth-aura{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(620px 420px at 50% 28%, rgba(132,180,161,.16), transparent 70%),
+    radial-gradient(520px 360px at 68% 78%, rgba(226,203,130,.10), transparent 70%);
+  animation:auth-aura 9s ease-in-out infinite alternate;
+}
+@keyframes auth-aura{ from{opacity:.65; transform:translateY(-6px)} to{opacity:1; transform:translateY(6px)} }
+@media(prefers-reduced-motion:reduce){ .auth-brand,.auth-aura{ animation:none; filter:none } }

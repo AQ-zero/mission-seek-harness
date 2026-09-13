@@ -1,0 +1,21 @@
+name: ✨ Feature request / 功能建议
+description: Suggest an idea. Grounded in real use is best. / 提一个想法，来自真实使用最好。
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve? / 它解决什么问题？
+      description: The "why" and who it's for — not just the feature. / 说清"为什么"和"为谁"，而不只是功能本身。
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposed idea / 设想
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered / 你考虑过的替代方案
