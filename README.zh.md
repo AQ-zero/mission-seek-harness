@@ -81,19 +81,6 @@ npm run dev
 - **`ENOENT: package.json`：** 跑错目录了——先 `cd` 进仓库根目录。
 </details>
 
-## 🖥️ 打包桌面应用
-
-用 Electron 把 Next 应用封装成 Windows / macOS / Linux 桌面程序。请在目标系统上构建（Windows 安装包在 Windows 上打，`.dmg` 在 mac 上打）。
-
-```bash
-npm install
-npm run desktop      # next build + 开一个 Electron 窗口（能开 = 跑通）
-npm run dist:win     # Windows → release/MissionSeek-Setup.exe
-npm run dist         # 当前平台
-```
-
-打 tag（`git tag vX.Y.Z && git push --tags`）会触发 CI 自动构建 Win + Mac 安装包并挂到 GitHub Release。
-
 ## 🤖 AI 服务商
 
 可插拔的 `LLMProvider`——改 `.env.local` 或应用内面板即可切换，**不改代码。**

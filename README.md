@@ -81,19 +81,6 @@ npm run dev
 - **`ENOENT: package.json`:** you're in the wrong directory — `cd` into the repo root first.
 </details>
 
-## 🖥️ Build the desktop app
-
-Package the Next app into a Windows / macOS / Linux desktop app via Electron. Build on the target OS (Windows installer on Windows, `.dmg` on macOS).
-
-```bash
-npm install
-npm run desktop      # next build + launch an Electron window (opens = it works)
-npm run dist:win     # Windows → release/MissionSeek-Setup.exe
-npm run dist         # current platform
-```
-
-Tagging a release (`git tag vX.Y.Z && git push --tags`) triggers CI to build Win + Mac installers and attach them to the GitHub Release automatically.
-
 ## 🤖 AI providers
 
 Pluggable `LLMProvider` — switch by editing `.env.local` or the in-app panel, **no code changes.**
