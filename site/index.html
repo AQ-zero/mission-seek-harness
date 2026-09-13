@@ -91,8 +91,7 @@ header.nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 @media(min-width:920px){.hero-grid{grid-template-columns:1.06fr .94fr;gap:60px}}
 .h-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--pine-d);background:var(--glass);border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-weight:500}
 .h-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
-h1.head{font-size:clamp(38px,6vw,68px);line-height:1.05;font-weight:700;margin-top:24px;letter-spacing:-.025em}
-h1.head .l1{display:block;color:var(--ink)}
+h1.head{font-size:clamp(38px,6vw,68px);line-height:1.05;font-weight:700;margin-top:24px;letter-spacing:-.025em;text-transform:uppercase}
 h1.head .hero-last{display:block;background-image:linear-gradient(100deg,var(--pine-d) 0%,#CFE7DA 30%,var(--gold) 62%,var(--pine-d) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sheen 8s linear infinite}
 @keyframes sheen{0%{background-position:0% 50%}100%{background-position:220% 50%}}
 .sub{margin-top:24px;font-size:17.5px;line-height:1.75;color:var(--body);max-width:34em}
@@ -244,8 +243,8 @@ footer{border-top:1px solid var(--line-2);padding:46px 0;margin-top:20px}
     <div>
       <span class="h-badge"><span class="dot"></span><span data-zh="本地优先 · 开源 · 数据主权">Local-first · Open-source · Yours</span></span>
       <h1 class="head">
-        <span class="l1" data-zh="寻见使命，">Seek your mission.</span>
-        <span class="hero-last" data-zh="复利一生。">Compound your life.</span>
+        <span class="hero-last" data-zh="寻见使命，">Seek<br>your mission.</span>
+        <span class="hero-last" data-zh="复利一生。">Compound<br>your life.</span>
       </h1>
       <p class="sub" data-zh="从人生终点倒推北极星，把情绪变成使命的线索，每周把洞察收敛成行动。数据只在本地，永远属于你。">Reverse-engineer your North Star from the life you'd want remembered, turn envy / anger / flow into mission signals, and converge insight into action every week. Your data stays local — always yours.</p>
       <div class="cta">
