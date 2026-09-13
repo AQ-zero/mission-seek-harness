@@ -15,8 +15,6 @@ Most tools log what you *did*. MissionSeek compounds the two things that actuall
 
 [**Quick start**](#-quick-start) · [**Download**](https://github.com/AQ-zero/mission-seek-harness/releases) · [**Contribute**](./CONTRIBUTING.md)
 
-<img src="./.github/assets/missionseek-demo.gif" alt="MissionSeek demo" width="840">
-
 </div>
 
 ---

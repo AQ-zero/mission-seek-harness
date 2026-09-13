@@ -15,8 +15,6 @@
 
 [**快速开始**](#-快速开始) · [**下载**](https://github.com/AQ-zero/mission-seek-harness/releases) · [**参与共建**](./CONTRIBUTING.md)
 
-<img src="./.github/assets/missionseek-demo.gif" alt="MissionSeek 演示" width="840">
-
 </div>
 
 ---
