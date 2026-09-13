@@ -46,7 +46,7 @@
 
   <!-- North Star -->
   <g transform="translate(600 114)" filter="url(#glow)">
-    <path d="M0 -30 L5.5 -5.5 L30 0 L5.5 5.5 L0 30 L-5.5 5.5 L-30 0 L-5.5 -5.5 Z" fill="#ECD79C">
+    <path d="M0,-30 L2.68,-6.47 L12.7,-12.7 L6.47,-2.68 L30,0 L6.47,2.68 L12.7,12.7 L2.68,6.47 L0,30 L-2.68,6.47 L-12.7,12.7 L-6.47,2.68 L-30,0 L-6.47,-2.68 L-12.7,-12.7 L-2.68,-6.47 Z" fill="#ECD79C">
       <animateTransform attributeName="transform" type="scale" values="1;1.12;1" dur="4.5s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.85;1;0.85" dur="4.5s" repeatCount="indefinite"/>
     </path>

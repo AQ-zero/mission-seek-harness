@@ -1,19 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="MissionSeek">
   <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F4F1E8"/>
+    </linearGradient>
+    <radialGradient id="tileGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#EAF1EC" stop-opacity="0.7"/>
+      <stop offset="75%" stop-color="#EAF1EC" stop-opacity="0"/>
+    </radialGradient>
     <linearGradient id="star" x1="0.5" y1="0" x2="0.5" y2="1">
-      <stop offset="0" stop-color="#5CA98A"/>
-      <stop offset="0.5" stop-color="#2E5A49"/>
+      <stop offset="0" stop-color="#3E7E64"/>
+      <stop offset="0.55" stop-color="#2E5A49"/>
       <stop offset="1" stop-color="#C9A24B"/>
     </linearGradient>
-    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
-      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#7FC2A6" flood-opacity="0.28"/>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#1D4433" flood-opacity="0.22"/>
     </filter>
   </defs>
 
-  <g filter="url(#glow)">
-    <path d="M512,67 L553.3,412.2 L702.9,321.1 L611.8,470.7 L957,512 L611.8,553.3 L702.9,702.9 L553.3,611.8 L512,957 L470.7,611.8 L321.1,702.9 L412.2,553.3 L67,512 L412.2,470.7 L321.1,321.1 L470.7,412.2 Z" fill="url(#star)"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="224" fill="url(#tile)"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="224" fill="url(#tileGlow)"/>
+  <rect x="9" y="9" width="1006" height="1006" rx="216" fill="none" stroke="#2E5A49" stroke-opacity="0.12" stroke-width="3"/>
+
+  <g filter="url(#sh)">
+    <path d="M512,107 L549.6,421.2 L685.7,338.3 L602.8,474.4 L917,512 L602.8,549.6 L685.7,685.7 L549.6,602.8 L512,917 L474.4,602.8 L338.3,685.7 L421.2,549.6 L107,512 L421.2,474.4 L338.3,338.3 L474.4,421.2 Z" fill="url(#star)"/>
   </g>
 
-  <circle cx="512" cy="512" r="30" fill="#1D4433"/>
-  <circle cx="512" cy="512" r="13" fill="#E8C874"/>
+  <circle cx="512" cy="512" r="31" fill="#FFFFFF"/>
+  <circle cx="512" cy="512" r="13" fill="#C9A24B"/>
 </svg>
