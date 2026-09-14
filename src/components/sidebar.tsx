@@ -1,11 +1,13 @@
+// TARGET: src/components/sidebar.tsx  (REPLACES existing — settings→account menu, +guardrails nav, +account area)
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
-import { useT, LangToggle } from '@/lib/i18n/client';
+import { AccountMenu, type Profile } from './account-menu';
+import { useT, useLang, LangToggle } from '@/lib/i18n/client';
 
-type Item = { href?: string; key?: string; group?: string };
+type Item = { href?: string; key?: string; group?: string; label?: { zh: string; en: string } };
 
 const NAV: Item[] = [
   { href: '/', key: 'nav.overview' },
@@ -17,7 +19,7 @@ const NAV: Item[] = [
   { href: '/review', key: 'nav.review' },
   { group: 'nav.group.ledger' },
   { href: '/skills', key: 'nav.skills' },
-  { href: '/settings', key: 'nav.settings' },
+  { href: '/guardrails', label: { zh: '护栏', en: 'Guardrails' } },
   { group: 'nav.group.help' },
   { href: '/guide', key: 'nav.guide' },
   { href: '/help', key: 'nav.feedback' },
@@ -36,9 +38,11 @@ function Brand() {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ profile }: { profile: Profile }) {
   const pathname = usePathname();
   const t = useT();
+  const zh = useLang() === 'zh';
+  const label = (it: Item) => (it.label ? (zh ? it.label.zh : it.label.en) : t(it.key!));
 
   const links = NAV.map((it, i) =>
     it.group ? (
@@ -55,7 +59,7 @@ export function Sidebar() {
             : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-200'
         }`}
       >
-        {t(it.key!)}
+        {label(it)}
       </Link>
     ),
   );
@@ -72,12 +76,11 @@ export function Sidebar() {
               href={n.href!}
               className={`mr-4 text-[13px] ${isActive(pathname, n.href!) ? 'text-neutral-900 dark:text-neutral-100' : 'text-neutral-500'}`}
             >
-              {t(n.key!)}
+              {label(n)}
             </Link>
           ))}
         </nav>
-        <LangToggle />
-        <ThemeToggle />
+        <AccountMenu {...profile} direction="down" compact />
       </div>
 
       {/* desktop fixed sidebar */}
@@ -87,11 +90,13 @@ export function Sidebar() {
           <div className="mt-1.5 text-[11px] tracking-wide text-neutral-400">{t('brand.tagline')}</div>
         </div>
         <nav className="mt-9 flex flex-col gap-0.5">{links}</nav>
-        <div className="mt-auto flex items-center justify-between px-3 pt-6 text-[11px] text-neutral-400">
-          <span>{t('sidebar.week')}</span>
-          <div className="flex items-center gap-3">
+        <div className="mt-auto">
+          <div className="mb-1 flex items-center justify-end gap-3 px-3">
             <LangToggle />
             <ThemeToggle />
+          </div>
+          <div className="border-t border-neutral-200 pt-2 dark:border-neutral-800">
+            <AccountMenu {...profile} direction="up" />
           </div>
         </div>
       </aside>

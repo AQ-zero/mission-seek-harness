@@ -1,3 +1,4 @@
+// TARGET: src/app/settings/actions.ts  (REPLACES existing — +saveProfileAction, guardrails revalidate)
 'use server';
 import { getLang } from '@/lib/i18n/server';
 import { makeSnapshotNow } from '@/db';
@@ -8,7 +9,7 @@ import { addAntiGoal, removeAntiGoal, saveLowPointProtocol, saveLlmSettings, imp
 export async function addAntiGoalAction(statement: string): Promise<{ ok: boolean; error?: string }> {
   try {
     addAntiGoal(statement);
-    revalidatePath('/settings');
+    revalidatePath('/guardrails');
     revalidatePath('/');
     return { ok: true };
   } catch (e) {
@@ -19,7 +20,7 @@ export async function addAntiGoalAction(statement: string): Promise<{ ok: boolea
 export async function removeAntiGoalAction(id: string): Promise<{ ok: boolean; error?: string }> {
   try {
     removeAntiGoal(id);
-    revalidatePath('/settings');
+    revalidatePath('/guardrails');
     revalidatePath('/');
     return { ok: true };
   } catch (e) {
@@ -30,7 +31,7 @@ export async function removeAntiGoalAction(id: string): Promise<{ ok: boolean; e
 export async function saveLowPointAction(input: { triggers?: string; actions: string[]; supportListLocation?: string }): Promise<{ ok: boolean; error?: string }> {
   try {
     saveLowPointProtocol(input);
-    revalidatePath('/settings');
+    revalidatePath('/guardrails');
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -61,6 +62,18 @@ export async function saveLlmConfigAction(input: {
   }
 }
 
+// 个人资料：显示名称 / 头像（头像为压缩后的本地 dataURL；只在本机库，永不上云）
+export async function saveProfileAction(input: { name?: string; avatar?: string | null }): Promise<{ ok: boolean }> {
+  try {
+    if (typeof input.name === 'string') setSetting('profile.name', input.name.trim() || null);
+    if ('avatar' in input) setSetting('profile.avatar', input.avatar ?? null);
+    revalidatePath('/settings');
+    revalidatePath('/');
+    return { ok: true };
+  } catch {
+    return { ok: false };
+  }
+}
 
 // 数据迁移：解析导出的 JSON 并覆盖式导入（会先清空当前数据）
 export async function importAllAction(jsonText: string): Promise<{ ok: boolean; counts?: Record<string, number>; error?: string }> {
@@ -73,7 +86,7 @@ export async function importAllAction(jsonText: string): Promise<{ ok: boolean; 
     }
     const r = importAll(bundle);
     if (!r.ok) return { ok: false, error: r.error };
-    for (const p of ['/', '/settings', '/decisions', '/signals', '/review', '/skills', '/onboarding']) revalidatePath(p);
+    for (const p of ['/', '/settings', '/guardrails', '/decisions', '/signals', '/review', '/skills', '/onboarding']) revalidatePath(p);
     return { ok: true, counts: r.counts };
   } catch (e) {
     return { ok: false, error: (e as Error).message };

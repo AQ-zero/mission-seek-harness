@@ -11,6 +11,17 @@
   color-scheme: dark;
 }
 
+/* 字体大小 / 显示缩放：Chromium(Electron) 的 zoom 均匀缩放整页，不破坏 fixed 侧栏与内容对齐 */
+html[data-scale='sm'] {
+  zoom: 0.94;
+}
+html[data-scale='lg'] {
+  zoom: 1.08;
+}
+html[data-scale='xl'] {
+  zoom: 1.16;
+}
+
 body {
   font-family: var(--font-sans);
   font-size: 15.5px;
